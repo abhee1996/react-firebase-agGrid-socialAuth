@@ -1,25 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {Component} from 'react';
+import {BrowserRouter as Router ,Switch,Route} from 'react-router-dom'
+import Fblogin from './fb-login'
+import AgGrid  from './ag-grid'
+import Action from './action'
+import firebase from 'firebase'
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 
-function App() {
+class App extends Component{
+  render(){
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Router>
+        <Switch>
+          <Route exact path="/"  component={Fblogin}/>
+          <Route exact path="/ag-grid" component={AgGrid} />
+        </Switch>
+      </Router>
+    </>
   );
+  }
 }
 
 export default App;
