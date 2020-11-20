@@ -1,16 +1,19 @@
 import React ,{Component} from 'react';
-import axios from 'axios'
-import {Link,Redirect} from 'react-router-dom'
+//import axios from 'axios'
+//import {Link,Redirect} from 'react-router-dom'
 import { withRouter } from "react-router";
 
 // import FacebookLogin from 'react-facebook-login';
 import firebase from 'firebase'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 
+//if (!firebase.apps.length) {
+
 firebase.initializeApp({
   apiKey: "AIzaSyAbsVIHpBt8F3Whb3zl0LXQIKXOj-cPdZU",
   authDomain:"ag-grid-social-login.firebaseapp.com"
 })
+//}
 
 class Fblogin extends Component {
     state={
@@ -32,11 +35,16 @@ class Fblogin extends Component {
   componentDidMount=()=>{
     
     firebase.auth().onAuthStateChanged(user =>{
+      if(user){
       this.setState({
         isSignedIn:!!user
       })
       this.props.history.push({pathname:'/ag-grid'});
+    }
+    else{
+      this.props.history.push({pathname:'/'});
 
+    }
     })
 
   }
@@ -44,11 +52,11 @@ class Fblogin extends Component {
         if(response.accessToken){
           console.log('response.accessToken ::', response.accessToken)
 
-        this.setState({
+          this.setState({
           accessToken: response.accessToken,
-        })
+          })
 
-        this.props.history.push({pathname:'/ag-grid'});
+          this.props.history.push({pathname:'/ag-grid'});
       }
 
   }

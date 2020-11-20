@@ -2,8 +2,8 @@ import React ,{useState,useEffect} from 'react';
 import axios from 'axios'
 import {withRouter,Redirect} from 'react-router-dom'
 import {useHistory} from 'react-router'
-import Action from './action'
-
+//import firebase from 'firebase'
+//import firebase from './config'
 import {AgGridReact} from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css'
 import 'ag-grid-community/dist/styles/ag-theme-balham.css'
@@ -26,10 +26,10 @@ const AgGrid=(props)=> {
   
   const [ColumnDefs, setColumnDefs] = useState(initialColumnData)
   const [rowData, setrowData] = useState(initialRowData)
-  const [accessToken, setAccessToken] = useState("")
+  const [isSignedIn, setisSignedIn] = useState("")
   const [gridApi, setGridApi] = useState(null)
 
-  let history = useHistory();
+  //let history = useHistory();
 
   useEffect(() => {
     const getRows= async()=>{
@@ -39,28 +39,13 @@ const AgGrid=(props)=> {
     }
     getRows()
   },[])
-  const onButtonClick = e => {
-    const selectedNodes = gridApi.getSelectedNodes()
-    const selectedData = selectedNodes.map( node => node.data )
-    const selectedDataStringPresentation = selectedData.map( node => node.make + ' ' + node.model).join(', ')
-    alert(`Selected nodes: ${selectedDataStringPresentation}`)
-  }
   
-  const nullresponseFacebook = (response) => {
-
-    setAccessToken(
-       !response.accessToken
-    )
-    history.push({pathname:'/'});
-}
- //if(!response.accessToken) return <Redirect to="/"/>
-
+  
   return (
     <div className="ag-theme-balham" style={{width:500,height:315}}>
       <br/>
       <div style={{width:500,height:315,display:"inline"}}>
       <h1>Welcome to Ag Grid</h1>
-      <button onClick={nullresponseFacebook} >logout</button>
       </div>
       <br/>
       <br/>
@@ -80,11 +65,10 @@ const AgGrid=(props)=> {
        }}
 
       />
-      <button onClick={onButtonClick}>Get selected rows</button>
 
 
     </div>
   );
 }
 
-export default withRouter(AgGrid);
+export default withRouter(AgGrid)
